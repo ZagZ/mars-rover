@@ -3,10 +3,11 @@ var rover = {
   direction: "N",
   x: 0,
   y: 0,
-
+  travelLog: []
 }
 // ======================
-console.log('Ingresa tus instrucciones de las siguiente manera: getArray="/tus indicaciones/"');
+console.log('Ingresa tus instrucciones de las siguiente manera: Comando="/tus indicaciones/"');
+console.log("Despues ejecuta la funcion 'movRover();'");
 // ======================
 function turnLeft(rover) {
   console.log("Giraste a la Izquierda!!");
@@ -50,12 +51,7 @@ function moveForward(rover) {
   console.log("Avanzaste hacia adelante!!");
   switch (rover.direction) {
     case "N":
-      if (rover.y < 0) {
-        console.log("ADVERTENCIA: ESTAS SALIENDO DEL ESPACIO ASIGNADO::MOVIMIENTO INVALIDO");
-      }
-      else {
-        rover.y--;
-      }
+      rover.y--;
       break;
     case "E":
       rover.x++;
@@ -68,14 +64,35 @@ function moveForward(rover) {
       break;
   }
   console.log("Nueva posición del rover =  " + rover.x + ' , ' + rover.y + '  ' + rover.direction);
+  rover.travelLog.push([rover.x, rover.y]);
 }
 
-var getArray = "";
+function moveBack(rover) {
+  console.log("Avanzaste hacia atras!!");
+  switch (rover.direction) {
+    case "N":
+      rover.y++;
+      break;
+    case "E":
+      rover.x--;
+      break;
+    case "S":
+      rover.y--;
+      break;
+    case "W":
+      rover.x++;
+      break;
+  }
+  console.log("Nueva posición del rover =  " + rover.x + ' , ' + rover.y + '  ' + rover.direction);
+  rover.travelLog.push([rover.x, rover.y]);
+}
+
+var Comando = "";
 
 function movRover() {
-  var lower = getArray.toLocaleLowerCase();
+  var lower = Comando.toLowerCase();
 
-  for (var i = 0; i < getArray.length; i++) {
+  for (var i = 0; i < Comando.length; i++) {
     switch (lower[i]) {
       case "l":
         turnLeft(rover)
@@ -87,14 +104,20 @@ function movRover() {
         moveForward(rover)
         break;
       case "b":
-        moveBackwards(rover)
+        moveBack(rover)
         break;
       default:
         console.log("Comando invalido")
         break;
     }
   }
-  console.log(rover.x + "," + rover.y + "  " + rover.direction);
+  console.log("La posición final del rover es: " + rover.x + "," + rover.y + "  " + rover.direction);
+  console.log("Puedes agregar más instrucciones o recargar la pagina para empezar desde cero");
+  console.log("Este fue tu recorrido: ");
+  console.log("0,0");
+  for (i = 0; i < rover.travelLog.length; i++) {
+    console.log(rover.travelLog[i] + " ");
+  }
 }
 
 
